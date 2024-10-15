@@ -1,0 +1,90 @@
+/* PathfindingVisualizer.css */
+
+/* Ensure the body and HTML take up full height */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Visualizer container that holds the grid and controls */
+.visualizer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Control panel styles */
+.control-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ccc;
+}
+
+/* Space between buttons and dropdowns */
+.control-panel select,
+.control-panel button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+/* Grid container taking up full width and height */
+.grid-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* The grid itself */
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Flex rows inside grid */
+.grid div {
+  display: flex;
+}
+
+/* Styling individual nodes */
+.node {
+  width: calc(100vw / 50);
+  /* Adjust width based on screen size */
+  height: calc(100vh / 20);
+  /* Adjust height based on screen size */
+  border: 1px solid lightgray;
+}
+
+.node-visited {
+  background-color: lightblue;
+}
+
+.node-shortest-path {
+  background-color: yellow;
+}
+
+.node-wall {
+  background-color: black;
+}
+
+/* Optional: Adjust logo size and positioning */
+.logo img {
+  width: 100px;
+  height: 50px;
+}
+
+/* Align the logo on the left */
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
