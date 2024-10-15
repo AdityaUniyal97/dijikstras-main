@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
 import { dijkstra, getNodesInShortestPathOrder } from '../algorithms/dijkstra';
-import { aStar } from '../algorithms/AStar';
 import logo from './gfg-new-logo.png';
 import './PathfindingVisualizer.css';
 
@@ -16,8 +15,8 @@ export default class PathfindingVisualizer extends Component {
     this.state = {
       grid: [],
       mouseIsPressed: false,
-      selectedAlgorithm: 'dijkstra',
-      selectedSpeed: 'average', // Default selected speed
+      selectedAlgorithm: 'dijkstra', // Default algorithm to Dijkstra
+      selectedSpeed: 'average', // Default speed
     };
   }
 
@@ -91,9 +90,6 @@ export default class PathfindingVisualizer extends Component {
     if (selectedAlgorithm === 'dijkstra') {
       visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    } else if (selectedAlgorithm === 'aStar') {
-      visitedNodesInOrder = aStar(grid, startNode, finishNode);
-      nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     }
 
     this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
@@ -107,11 +103,6 @@ export default class PathfindingVisualizer extends Component {
     this.setState({ selectedSpeed: event.target.value });
   };
 
-  // Add a method to navigate to the Sorting Visualizer
-  navigateToSortingVisualizer = () => {
-    window.location.href = 'SortingAlgorithm/index.html'; // Update the path as needed
-  };
-
   render() {
     const { grid, mouseIsPressed, selectedAlgorithm, selectedSpeed } = this.state;
 
@@ -123,7 +114,6 @@ export default class PathfindingVisualizer extends Component {
           </div>
           <select value={selectedAlgorithm} onChange={this.handleAlgorithmChange}>
             <option value="dijkstra">Dijkstra's Algorithm</option>
-            <option value="aStar">A* Algorithm</option>
           </select>
           <select value={selectedSpeed} onChange={this.handleSpeedChange}>
             <option value="fast">Fast</option>
@@ -131,7 +121,6 @@ export default class PathfindingVisualizer extends Component {
             <option value="slow">Slow</option>
           </select>
           <button onClick={() => this.visualizeAlgorithm()}>Visualize Algorithm</button>
-          <button onClick={this.navigateToSortingVisualizer}>Go to Sorting Visualizer</button>
         </div>
         <div className="grid-container">
           <div className="grid">
