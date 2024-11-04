@@ -1,20 +1,20 @@
 // Performs Dijkstra's algorithm on a grid; returns all nodes in the order they were visited.
-// Also sets each node's previousNode to reconstruct the shortest path from start to finish.
+// Sets each node's previousNode to allow path reconstruction from start to finish.
 export function dijkstra(grid, startNode, finishNode) {
-  const visitedNodesInOrder = [];
+  const visitedNodesInOrder = []; // Array to store nodes in the order they're visited
 
-  // Initialize distances and previous nodes
+  // Set initial distances to Infinity and clear any previous path data
   const nodes = getAllNodes(grid);
   for (const node of nodes) {
-    node.distance = Infinity; // Similar to dist[] in Java code
-    node.previousNode = null;
-    node.isFinished = false; // Similar to fin[] in Java code
+    node.distance = Infinity; // Represents initial distance as unreachable
+    node.previousNode = null; // Clears previous node data for path tracing
+    node.isFinished = false;  // Tracks whether the node is finalized
   }
-  startNode.distance = 0;
+  startNode.distance = 0; // Set the start node's distance to 0 to start the algorithm
 
-  // Main loop: process nodes until all are finalized
+  // Main loop: find the closest unfinished node and update neighbors
   while (nodes.some(node => !node.isFinished)) {
-    // Select the unfinished node with the smallest distance
+    // Find the unfinished node with the smallest distance
     let currentNode = null;
     for (const node of nodes) {
       if (!node.isFinished && (currentNode === null || node.distance < currentNode.distance)) {
@@ -22,49 +22,49 @@ export function dijkstra(grid, startNode, finishNode) {
       }
     }
 
-    // If we encounter a wall or the smallest distance is Infinity, break the loop
+    // Stop if the closest node is a wall or if no reachable nodes remain
     if (currentNode.isWall || currentNode.distance === Infinity) break;
 
-    // Mark the node as finished
+    // Mark the node as finished (it has been processed)
     currentNode.isFinished = true;
-    visitedNodesInOrder.push(currentNode);
+    visitedNodesInOrder.push(currentNode); // Add to the list of visited nodes
 
-    // If we have reached the finish node, we can exit
+    // If we reach the finish node, stop the algorithm
     if (currentNode === finishNode) break;
 
-    // Update distances to adjacent unfinished nodes
+    // Update distances to neighboring nodes
     updateAdjacentNodes(currentNode, grid);
   }
 
-  return visitedNodesInOrder;
+  return visitedNodesInOrder; // Return the nodes in the order they were visited
 }
 
-// Updates the distances of adjacent unfinished nodes
+// Updates distances of adjacent nodes that haven't been finished
 function updateAdjacentNodes(node, grid) {
-  const adjacentNodes = getAdjacentNodes(node, grid);
+  const adjacentNodes = getAdjacentNodes(node, grid); // Get adjacent nodes
   for (const neighbor of adjacentNodes) {
-    // Calculate new tentative distance
-    const newDistance = node.distance + 1; // Assuming edge weight is 1 for grid movement
-    if (newDistance < neighbor.distance) {
+    // Calculate a new possible distance to the neighbor
+    const newDistance = node.distance + 1; // Assuming each step costs 1
+    if (newDistance < neighbor.distance) { // Update if new path is shorter
       neighbor.distance = newDistance;
-      neighbor.previousNode = node;
+      neighbor.previousNode = node; // Set path back to the current node
     }
   }
 }
 
-// Retrieves adjacent unfinished nodes (excluding walls)
+// Returns adjacent nodes that are not walls or finished
 function getAdjacentNodes(node, grid) {
   const neighbors = [];
   const { col, row } = node;
-  if (row > 0) neighbors.push(grid[row - 1][col]); // Up
-  if (row < grid.length - 1) neighbors.push(grid[row + 1][col]); // Down
-  if (col > 0) neighbors.push(grid[row][col - 1]); // Left
-  if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]); // Right
-  // Return neighbors that are not finished and not walls
+  if (row > 0) neighbors.push(grid[row - 1][col]); // Node above
+  if (row < grid.length - 1) neighbors.push(grid[row + 1][col]); // Node below
+  if (col > 0) neighbors.push(grid[row][col - 1]); // Node to the left
+  if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]); // Node to the right
+  // Filter out walls and finished nodes
   return neighbors.filter(neighbor => !neighbor.isFinished && !neighbor.isWall);
 }
 
-// Retrieves all nodes from the grid
+// Collects all nodes from the grid into a single array
 function getAllNodes(grid) {
   const nodes = [];
   for (const row of grid) {
@@ -75,14 +75,15 @@ function getAllNodes(grid) {
   return nodes;
 }
 
-// Backtracks from the finishNode to find the shortest path.
-// Should be called after the dijkstra function.
+// Backtracks from the finishNode to build the shortest path in order.
+// Call this function after running dijkstra to trace back the path.
 export function getNodesInShortestPathOrder(finishNode) {
   const nodesInShortestPathOrder = [];
   let currentNode = finishNode;
+  // Move backward from the finish node to the start node
   while (currentNode !== null) {
-    nodesInShortestPathOrder.unshift(currentNode);
-    currentNode = currentNode.previousNode;
+    nodesInShortestPathOrder.unshift(currentNode); // Add node to path
+    currentNode = currentNode.previousNode; // Move to previous node
   }
   return nodesInShortestPathOrder;
 }

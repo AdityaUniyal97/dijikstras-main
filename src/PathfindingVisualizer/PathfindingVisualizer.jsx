@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
 import { dijkstra, getNodesInShortestPathOrder } from '../algorithms/dijkstra';
+import { aStar } from '../algorithms/aStar';
 import logo from './gfg-new-logo.png';
 import './PathfindingVisualizer.css';
 
@@ -10,8 +11,8 @@ export default class PathfindingVisualizer extends Component {
     this.state = {
       grid: [],
       mouseIsPressed: false,
-      selectedAlgorithm: 'dijkstra', // Default algorithm to Dijkstra
-      selectedSpeed: 'average', // Default speed
+      selectedAlgorithm: 'dijkstra',
+      selectedSpeed: 'average',
       startNode: { row: 10, col: 15 },
       finishNode: { row: 10, col: 35 },
       isSettingStartNode: false,
@@ -24,14 +25,28 @@ export default class PathfindingVisualizer extends Component {
     this.setState({ grid });
   }
 
+  toggleSettingStartNode = () => {
+    this.setState({ 
+      isSettingStartNode: !this.state.isSettingStartNode,
+      isSettingFinishNode: false 
+    });
+  };
+
+  toggleSettingFinishNode = () => {
+    this.setState({ 
+      isSettingFinishNode: !this.state.isSettingFinishNode,
+      isSettingStartNode: false 
+    });
+  };
+
   handleMouseDown(row, col) {
     if (this.state.isSettingStartNode) {
-      this.setState({ startNode: { row, col } }, () => {
+      this.setState({ startNode: { row, col }, isSettingStartNode: false }, () => {
         const grid = getInitialGrid(this.state.startNode, this.state.finishNode);
         this.setState({ grid });
       });
     } else if (this.state.isSettingFinishNode) {
-      this.setState({ finishNode: { row, col } }, () => {
+      this.setState({ finishNode: { row, col }, isSettingFinishNode: false }, () => {
         const grid = getInitialGrid(this.state.startNode, this.state.finishNode);
         this.setState({ grid });
       });
@@ -51,14 +66,6 @@ export default class PathfindingVisualizer extends Component {
     this.setState({ mouseIsPressed: false });
   }
 
-  toggleSettingStartNode = () => {
-    this.setState({ isSettingStartNode: !this.state.isSettingStartNode, isSettingFinishNode: false });
-  };
-
-  toggleSettingFinishNode = () => {
-    this.setState({ isSettingFinishNode: !this.state.isSettingFinishNode, isSettingStartNode: false });
-  };
-
   getSpeedInMs = () => {
     const { selectedSpeed } = this.state;
     switch (selectedSpeed) {
@@ -67,12 +74,14 @@ export default class PathfindingVisualizer extends Component {
       case 'slow':
         return 50;
       default:
-        return 20; // average speed
+        return 20;
     }
   };
 
-  animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder) {
+  animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, algorithmType) {
     const speed = this.getSpeedInMs();
+    const visitedClass = algorithmType === 'aStar' ? 'node node-visited-aStar' : 'node node-visited';
+
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -82,8 +91,7 @@ export default class PathfindingVisualizer extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-visited';
+        document.getElementById(`node-${node.row}-${node.col}`).className = visitedClass;
       }, speed * i);
     }
   }
@@ -109,9 +117,12 @@ export default class PathfindingVisualizer extends Component {
     if (selectedAlgorithm === 'dijkstra') {
       visitedNodesInOrder = dijkstra(grid, start, finish);
       nodesInShortestPathOrder = getNodesInShortestPathOrder(finish);
+      this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, 'dijkstra');
+    } else if (selectedAlgorithm === 'aStar') {
+      visitedNodesInOrder = aStar(grid, start, finish);
+      nodesInShortestPathOrder = getNodesInShortestPathOrder(finish);
+      this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder, 'aStar');
     }
-
-    this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   handleAlgorithmChange = (event) => {
@@ -133,6 +144,7 @@ export default class PathfindingVisualizer extends Component {
           </div>
           <select value={selectedAlgorithm} onChange={this.handleAlgorithmChange}>
             <option value="dijkstra">Dijkstra's Algorithm</option>
+            <option value="aStar">A* Algorithm</option>
           </select>
           <select value={selectedSpeed} onChange={this.handleSpeedChange}>
             <option value="fast">Fast</option>
@@ -157,6 +169,7 @@ export default class PathfindingVisualizer extends Component {
                     return (
                       <Node
                         key={nodeIdx}
+                        id={`node-${row}-${col}`}
                         col={col}
                         isFinish={isFinish}
                         isStart={isStart}
@@ -213,4 +226,4 @@ const getNewGridWithWallToggled = (grid, row, col) => {
   };
   newGrid[row][col] = newNode;
   return newGrid;
-};  
+};

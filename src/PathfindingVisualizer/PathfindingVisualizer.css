@@ -57,15 +57,18 @@ html {
 
 /* Styling individual nodes */
 .node {
-  width: calc(100vw / 50);
-  /* Adjust width based on screen size */
-  height: calc(100vh / 20);
-  /* Adjust height based on screen size */
+  width: calc(100vw / 50); /* Adjust width based on screen size */
+  height: calc(100vh / 20); /* Adjust height based on screen size */
   border: 1px solid lightgray;
 }
 
 .node-visited {
   background-color: lightblue;
+}
+
+.node-visited-aStar {
+  background-color: orange; /* Distinct color for A* */
+  transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
 .node-shortest-path {
