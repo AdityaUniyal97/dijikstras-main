@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AdityaUniyal97.github.io/dijkstras-main",
+  "homepage": "https://AdityaUniyal97.github.io/dijikstras-main",
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
     "leaflet": "^1.9.4",
