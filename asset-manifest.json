@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/dijikstras-main/static/css/main.e87168cd.css",
+    "main.css": "/dijikstras-main/static/css/main.984cf45c.css",
     "main.js": "/dijikstras-main/static/js/main.afd8c9a8.js",
     "index.html": "/dijikstras-main/index.html",
-    "main.e87168cd.css.map": "/dijikstras-main/static/css/main.e87168cd.css.map",
+    "main.984cf45c.css.map": "/dijikstras-main/static/css/main.984cf45c.css.map",
     "main.afd8c9a8.js.map": "/dijikstras-main/static/js/main.afd8c9a8.js.map"
   },
   "entrypoints": [
-    "static/css/main.e87168cd.css",
+    "static/css/main.984cf45c.css",
     "static/js/main.afd8c9a8.js"
   ]
 }
