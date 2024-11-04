@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/dijkstras-main/static/css/main.e87168cd.css",
-    "main.js": "/dijkstras-main/static/js/main.92f417a4.js",
-    "index.html": "/dijkstras-main/index.html",
-    "main.e87168cd.css.map": "/dijkstras-main/static/css/main.e87168cd.css.map",
-    "main.92f417a4.js.map": "/dijkstras-main/static/js/main.92f417a4.js.map"
+    "main.css": "/dijikstras-main/static/css/main.e87168cd.css",
+    "main.js": "/dijikstras-main/static/js/main.92f417a4.js",
+    "index.html": "/dijikstras-main/index.html",
+    "main.e87168cd.css.map": "/dijikstras-main/static/css/main.e87168cd.css.map",
+    "main.92f417a4.js.map": "/dijikstras-main/static/js/main.92f417a4.js.map"
   },
   "entrypoints": [
     "static/css/main.e87168cd.css",
