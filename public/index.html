@@ -10,24 +10,62 @@
     <link rel="manifest" href="/dijikstras-main/manifest.json" />
     <title>Pathfinding Visualizer</title>
     <style>
+        /* Base styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
         header {
             background-color: #282c34;
             padding: 20px;
             color: white;
             text-align: center;
+            width: 100%;
         }
+        
         h1 {
             margin: 0;
+            font-size: 1.8em;
         }
+        
         h2 {
             margin: 0;
             font-weight: normal;
+            font-size: 1.2em;
+        }
+        
+        /* Mobile-friendly adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1em;
+            }
+            header {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em;
+            }
+            h2 {
+                font-size: 0.9em;
+            }
+            header {
+                padding: 10px;
+            }
+            body {
+                font-size: 14px;
+            }
         }
     </style>
     <script defer="defer" src="/dijikstras-main/static/js/main.afd8c9a8.js"></script>
