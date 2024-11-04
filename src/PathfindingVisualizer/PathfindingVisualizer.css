@@ -1,3 +1,5 @@
+/* PathfindingVisualizer.css */
+
 /* Ensure the body and HTML take up full height */
 body,
 html {
@@ -5,7 +7,6 @@ html {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: Arial, sans-serif;
 }
 
 /* Visualizer container that holds the grid and controls */
@@ -18,8 +19,6 @@ html {
 /* Control panel styles */
 .control-panel {
   display: flex;
-  flex-wrap: wrap;
-  /* Allow controls to wrap on small screens */
   justify-content: center;
   align-items: center;
   padding: 10px;
@@ -30,7 +29,7 @@ html {
 /* Space between buttons and dropdowns */
 .control-panel select,
 .control-panel button {
-  margin: 5px 10px;
+  margin: 0 10px;
   padding: 5px 10px;
   font-size: 16px;
 }
@@ -42,8 +41,6 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
-  overflow: auto;
-  /* Enable scrolling if needed */
 }
 
 /* The grid itself */
@@ -51,8 +48,6 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 100%;
-  /* Prevent overflow */
 }
 
 /* Flex rows inside grid */
@@ -62,23 +57,18 @@ html {
 
 /* Styling individual nodes */
 .node {
-  width: calc(100vw / 50);
-  /* Adjust width based on screen size */
-  height: calc(100vh / 20);
-  /* Adjust height based on screen size */
+  width: calc(100vw / 50); /* Adjust width based on screen size */
+  height: calc(100vh / 20); /* Adjust height based on screen size */
   border: 1px solid lightgray;
 }
 
-/* Distinct styles for node states */
 .node-visited {
   background-color: lightblue;
 }
 
 .node-visited-aStar {
-  background-color: orange;
-  /* Distinct color for A* */
-  transition: background-color 0.3s ease;
-  /* Smooth color transition */
+  background-color: orange; /* Distinct color for A* */
+  transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
 .node-shortest-path {
@@ -89,58 +79,15 @@ html {
   background-color: black;
 }
 
-/* Logo styling */
+/* Optional: Adjust logo size and positioning */
 .logo img {
-  width: 80px;
-  height: 40px;
+  width: 100px;
+  height: 50px;
 }
 
-/* Align the logo on the left with responsive adjustments */
+/* Align the logo on the left */
 .logo {
   position: absolute;
   top: 10px;
   left: 20px;
-}
-
-/* Responsive adjustments for mobile screens */
-@media (max-width: 768px) {
-
-  .control-panel select,
-  .control-panel button {
-    font-size: 14px;
-    padding: 4px 8px;
-    margin: 3px 5px;
-  }
-
-  .node {
-    width: calc(100vw / 40);
-    /* Increase node size on smaller screens */
-    height: calc(100vh / 25);
-  }
-
-  .logo img {
-    width: 70px;
-    height: 35px;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .control-panel select,
-  .control-panel button {
-    font-size: 12px;
-    padding: 3px 6px;
-    margin: 2px 4px;
-  }
-
-  .node {
-    width: calc(100vw / 30);
-    /* Larger nodes for very small screens */
-    height: calc(100vh / 25);
-  }
-
-  .logo img {
-    width: 60px;
-    height: 30px;
-  }
 }
